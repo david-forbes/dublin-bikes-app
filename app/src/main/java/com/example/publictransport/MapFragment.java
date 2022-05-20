@@ -1,11 +1,19 @@
 package com.example.publictransport;
 
+import android.annotation.SuppressLint;
+import android.content.Context;
+import android.content.pm.PackageManager;
+import android.location.LocationListener;
+import android.location.LocationManager;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.Manifest;
 
 import androidx.annotation.Nullable;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
 import com.example.publictransport.R;
@@ -77,21 +85,20 @@ public class MapFragment extends Fragment implements  OnMapReadyCallback{
     @Override
     public void onSaveInstanceState(final Bundle outState) {
         super.onSaveInstanceState(outState);
-        if (mMapView != null) {
-            mMapView.onSaveInstanceState(outState);
-        }
+        outState.clear();
     }
 
 
 
 
+    @SuppressLint("MissingPermission")
     public void onMapReady(GoogleMap mMap) {
         GoogleMap googleMap = mMap;
 
 
         JSONArray jsonArray = MySingleton.getInstance().getJsonArray();
 
-        for (int i = 0; i < 3; i++) {
+        for (int i = 0; i < jsonArray.length(); i++) {
             try {
                 Double lon = Double.parseDouble(jsonArray.getJSONObject(i).getString("longitude"));
                 Double lat = Double.parseDouble(jsonArray.getJSONObject(i).getString("latitude"));
@@ -105,14 +112,19 @@ public class MapFragment extends Fragment implements  OnMapReadyCallback{
         }
 
 
-        LatLng sydney = new LatLng(-34, 151);
-        googleMap.addMarker(new MarkerOptions().position(sydney).title("Marker Title").snippet("Marker Description"));
 
+        if (ContextCompat.checkSelfPermission(getActivity().getApplicationContext(), Manifest.permission.ACCESS_FINE_LOCATION ) == PackageManager.PERMISSION_GRANTED) {
+            googleMap.setMyLocationEnabled(true);
+        } else {
+            // Show rationale and request permission.
+        }
 
         LatLng dublin = new LatLng(53.350140, -6.266155);
         CameraPosition cameraPosition = new CameraPosition.Builder().target(dublin).zoom(12).build();
         googleMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
+
     }
+
 
 }
 
