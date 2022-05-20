@@ -65,18 +65,27 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
 
             case R.id.page_2:
                 //SupportMapFragment mapFragment = SupportMapFragment.newInstance();
-                getSupportFragmentManager().beginTransaction().replace(R.id.container, mapFragment).commit();
+                getSupportFragmentManager().beginTransaction().replace(R.id.container,mapFragment).commit();
+                // Obtain the SupportMapFragment and get notified when the map is ready to be used.
+                /*
+                SupportMapFragment supportMapFragment = (SupportMapFragment) getSupportFragmentManager()
+                        .findFragmentById(R.id.mapView);
+                supportMapFragment.getMapAsync(this);
 
-
+                 */
                 return true;
+        }
+
+
+
 /*
             case R.id.settings:
                 getSupportFragmentManager().beginTransaction().replace(R.id.container, thirdFragment).commit();
                 return true;
 
  */
-        }
-        return false;
+        return true;
+
     }
 
     public void onMapReady(GoogleMap googleMap) {
