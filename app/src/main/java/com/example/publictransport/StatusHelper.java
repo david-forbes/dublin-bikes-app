@@ -4,12 +4,14 @@ import android.app.Activity;
 import android.util.JsonReader;
 import android.util.Log;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.lang.reflect.Array;
 import java.net.HttpURLConnection;
 import java.net.URI;
 import java.net.URL;
@@ -59,5 +61,36 @@ public class StatusHelper {
 
 
 
+    }
+    public static ArrayList<StationInfoInstance> parseJson(String stringObject) {
+        String string=stringObject.toString();
+        ArrayList<StationInfoInstance> stationInfo= new ArrayList<>();
+
+        JSONArray jsonArray = new JSONArray();
+        string = string.substring(1, string.length() - 1);
+        try {
+            while(!string.isEmpty()) {
+                JSONObject json = new JSONObject(string);
+                for(int i=0;i<string.length();i++){
+                    if(string.charAt(i)==(char)'}'){
+                        if(i+2<string.length()) {
+                            string = string.substring(i + 2);
+                        }else{string = "";}
+                        break;
+                    }
+                }
+                jsonArray.put(json);
+
+            }
+            StationInfoInstance instance;
+            for(int i=0;i<jsonArray.length();i++){
+                instance = new StationInfoInstance(jsonArray.getJSONObject(i).getString("name") ,
+                        "Bikes Available : "+(jsonArray.getJSONObject(i).getString("available_bikes")),
+                        "Bikes Stands Available : "+(jsonArray.getJSONObject(i).getString("available_bike_stands")));
+                stationInfo.add(instance);
+            }
+    }catch(Exception e){
+            Log.d(TAG, "parseJson: "+e);}
+        return stationInfo;
     }
 }

@@ -3,11 +3,13 @@ package com.example.publictransport;
 import android.annotation.SuppressLint;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.Manifest;
 
+import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
@@ -24,7 +26,7 @@ import org.json.JSONArray;
 
 public class MapFragment extends Fragment implements  OnMapReadyCallback{
 
-
+    String TAG = MapFragment.class.getSimpleName();
     MapView mMapView;
     private GoogleMap googleMap;
 
@@ -34,7 +36,7 @@ public class MapFragment extends Fragment implements  OnMapReadyCallback{
 
         mMapView = (MapView) rootView.findViewById(R.id.mapView);
         mMapView.onCreate(savedInstanceState);
-
+        mMapView.onResume();
 
         // needed to get the map to display immediately
 
@@ -65,7 +67,9 @@ public class MapFragment extends Fragment implements  OnMapReadyCallback{
     @Override
     public void onDestroy() {
         super.onDestroy();
+
         mMapView.onDestroy();
+        Log.d(TAG, "onDestroy: ");
     }
 
     @Override
@@ -73,11 +77,15 @@ public class MapFragment extends Fragment implements  OnMapReadyCallback{
         super.onLowMemory();
         mMapView.onLowMemory();
     }
+    /*
     @Override
-    public void onSaveInstanceState(final Bundle outState) {
+    public void onSaveInstanceState(@NonNull final Bundle outState) {
         super.onSaveInstanceState(outState);
         outState.clear();
+        Log.d(TAG, "onSaveInstanceState: ");
     }
+
+     */
 
 
 

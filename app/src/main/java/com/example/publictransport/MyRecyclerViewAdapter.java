@@ -9,18 +9,22 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAdapter.ViewHolder> {
 
-    private List<StationInfoInstance> mData;
+
+    private ArrayList<StationInfoInstance> mData;
     private LayoutInflater mInflater;
     private ItemClickListener mClickListener;
+    private MyFilter filter;
 
     // data is passed into the constructor
-    MyRecyclerViewAdapter(Context context, List<StationInfoInstance> data) {
+    MyRecyclerViewAdapter(Context context, ArrayList<StationInfoInstance> data) {
         this.mInflater = LayoutInflater.from(context);
         this.mData = data;
+        this.filter = new MyFilter(data,this);
     }
 
     // inflates the row layout from xml when needed
@@ -42,13 +46,26 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAd
     }
 
     // binds the data to the TextView in each row
+    public List<StationInfoInstance> getList() {
+        return mData;
+    }
 
+    public void setList(ArrayList<StationInfoInstance> mData) {
+        this.mData = mData;
+    }
+    public void setFilterList(ArrayList<StationInfoInstance> mData){
+        this.filter.setStationInfoInstanceArrayList(mData);
+    }
 
 
     // total number of rows
     @Override
     public int getItemCount() {
         return mData.size();
+    }
+
+    public void filterList(String text) {
+        filter.performFiltering(text);
     }
 
 
@@ -87,4 +104,5 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAd
     public interface ItemClickListener {
         void onItemClick(View view, int position);
     }
+
 }

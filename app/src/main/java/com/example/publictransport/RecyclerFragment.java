@@ -39,6 +39,7 @@ public class RecyclerFragment extends Fragment implements MyRecyclerViewAdapter.
         recyclerView.setAdapter(adapter);
 
         adapter.setClickListener(this::onItemClick);
+
         return view;
     }
     @Override
@@ -46,45 +47,19 @@ public class RecyclerFragment extends Fragment implements MyRecyclerViewAdapter.
         super.onCreate(savedInstanceState);
         @SuppressLint("StaticFieldLeak") ApiRequest apiRequest = new ApiRequest() {
 
-            protected void onPostExecute(Object stringObject) {
-                super.onPostExecute(stringObject);
-                String string=stringObject.toString();
-
-
-                JSONArray jsonArray = new JSONArray();
-                string = string.substring(1, string.length() - 1);
-                try {
-                    while(!string.isEmpty()) {
-                        JSONObject json = new JSONObject(string);
-                        for(int i=0;i<string.length();i++){
-                            if(string.charAt(i)==(char)'}'){
-                                if(i+2<string.length()) {
-                                    string = string.substring(i + 2);
-                                }else{string = "";}
-                                break;
-                            }
-                        }
-                        jsonArray.put(json);
-
-                    }
-                    StationInfoInstance instance;
-                    for(int i=0;i<jsonArray.length();i++){
-                        instance = new StationInfoInstance("Station Name : "+jsonArray.getJSONObject(i).getString("name") ,
-                                "Bikes Available : "+(jsonArray.getJSONObject(i).getString("available_bikes")),
-                                "Bikes Stands Available : "+(jsonArray.getJSONObject(i).getString("available_bike_stands")));
-                        stationInfo.add(instance);
-                    }
-                    MySingleton.getInstance().setJsonArray(jsonArray);
+            protected void onPostExecute(Object jsonObject) {
+                super.onPostExecute(jsonObject);
+                ArrayList<StationInfoInstance> stationInfo = (ArrayList<StationInfoInstance>) jsonObject;
+                Log.d(TAG, "recyclerfragment: "+stationInfo);
+                    adapter.setFilterList(stationInfo);
+                    adapter.setList(stationInfo);
                     adapter.notifyDataSetChanged();
+                    //adapter.filterList("cl");
 
 
-                    Log.d(TAG, "onPostExecute: " + jsonArray.length());
-                }catch (Exception e){
-                    Log.d(TAG, "onPostExecute: "+e);
                 }
 
 
-            }
 
 
 
@@ -101,6 +76,10 @@ public class RecyclerFragment extends Fragment implements MyRecyclerViewAdapter.
     }
 
     public void onItemClick(View view, int position) {
+        StationInfoInstance stationInfoInstance = stationInfo.get(position);
+        stationInfo.remove(position);
+        stationInfo.add(0,stationInfoInstance);
+        adapter.notifyDataSetChanged();
         Toast.makeText(getActivity(), "You clicked " + adapter.getItem(position) + " on row number " + position, Toast.LENGTH_SHORT).show();
     }
 
