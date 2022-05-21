@@ -1,8 +1,11 @@
 package com.example.publictransport;
 
+import static android.content.Context.MODE_PRIVATE;
 import static java.lang.Math.min;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -81,6 +84,12 @@ public class RecyclerFragment extends Fragment implements MyRecyclerViewAdapter.
         stationInfo.add(0,stationInfoInstance);
         adapter.notifyDataSetChanged();
         Toast.makeText(getActivity(), "You clicked " + adapter.getItem(position) + " on row number " + position, Toast.LENGTH_SHORT).show();
+
+        Context context = MyApplication.getAppContext();
+        SharedPreferences sharedPreferences = context.getSharedPreferences("com.example.publictransport",MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString(stationInfo.get(0).getName(), "true");
+        editor.apply();
     }
 
 }

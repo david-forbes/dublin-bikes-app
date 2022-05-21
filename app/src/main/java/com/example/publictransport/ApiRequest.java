@@ -1,5 +1,7 @@
 package com.example.publictransport;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.util.Log;
 
@@ -61,6 +63,8 @@ public class ApiRequest extends AsyncTask {
 
         JSONArray jsonArray = new JSONArray();
         string = string.substring(1, string.length() - 1);
+        Context context = MyApplication.getAppContext();
+        SharedPreferences sharedPref = context.getSharedPreferences("com.example.publictransport", Context.MODE_PRIVATE);
         try {
             while(!string.isEmpty()) {
                 JSONObject json = new JSONObject(string);
@@ -80,7 +84,13 @@ public class ApiRequest extends AsyncTask {
                 instance = new StationInfoInstance(jsonArray.getJSONObject(i).getString("name") ,
                         "Bikes Available : "+(jsonArray.getJSONObject(i).getString("available_bikes")),
                         "Bikes Stands Available : "+(jsonArray.getJSONObject(i).getString("available_bike_stands")));
-                stationInfo.add(instance);
+
+
+                if(!sharedPref.getString(instance.getName(),"").isEmpty()){
+                stationInfo.add(0,instance);}
+                else{
+                    stationInfo.add(instance);
+                }
             }
         }catch(Exception e){
             Log.d(TAG, "parseJson: "+e);}
