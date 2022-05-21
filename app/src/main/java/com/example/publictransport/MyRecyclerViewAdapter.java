@@ -52,6 +52,7 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAd
 
     public void setList(ArrayList<StationInfoInstance> mData) {
         this.mData = mData;
+        this.notifyDataSetChanged();
     }
     public void setFilterList(ArrayList<StationInfoInstance> mData){
         this.filter.setStationInfoInstanceArrayList(mData);

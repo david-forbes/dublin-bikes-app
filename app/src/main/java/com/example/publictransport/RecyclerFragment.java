@@ -49,7 +49,7 @@ public class RecyclerFragment extends Fragment implements MyRecyclerViewAdapter.
 
             protected void onPostExecute(Object jsonObject) {
                 super.onPostExecute(jsonObject);
-                ArrayList<StationInfoInstance> stationInfo = (ArrayList<StationInfoInstance>) jsonObject;
+                stationInfo = (ArrayList<StationInfoInstance>) jsonObject;
                 Log.d(TAG, "recyclerfragment: "+stationInfo);
                     adapter.setFilterList(stationInfo);
                     adapter.setList(stationInfo);
