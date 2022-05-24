@@ -83,12 +83,14 @@ public class ApiRequest extends AsyncTask {
             for(int i=0;i<jsonArray.length();i++){
                 instance = new StationInfoInstance(jsonArray.getJSONObject(i).getString("name") ,
                         "Bikes Available : "+(jsonArray.getJSONObject(i).getString("available_bikes")),
-                        "Bikes Stands Available : "+(jsonArray.getJSONObject(i).getString("available_bike_stands")));
+                        "Bikes Stands Available : "+(jsonArray.getJSONObject(i).getString("available_bike_stands")),0);
 
 
                 if(!sharedPref.getString(instance.getName(),"").isEmpty()){
+                    instance.setPinned(1);
                 stationInfo.add(0,instance);}
                 else{
+
                     stationInfo.add(instance);
                 }
             }

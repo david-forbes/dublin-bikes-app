@@ -86,7 +86,7 @@ public class StatusHelper {
             for(int i=0;i<jsonArray.length();i++){
                 instance = new StationInfoInstance(jsonArray.getJSONObject(i).getString("name") ,
                         "Bikes Available : "+(jsonArray.getJSONObject(i).getString("available_bikes")),
-                        "Bikes Stands Available : "+(jsonArray.getJSONObject(i).getString("available_bike_stands")));
+                        "Bikes Stands Available : "+(jsonArray.getJSONObject(i).getString("available_bike_stands")),0);
                 stationInfo.add(instance);
             }
     }catch(Exception e){

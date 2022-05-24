@@ -3,11 +3,14 @@
     <item
         android:id="@+id/page_1"
         android:enabled="true"
-        android:icon="@drawable/ic_launcher_background"
-        android:title="text1"/>
+
+        android:icon="@drawable/ic_baseline_list_24"
+        android:title="Station List"/>
     <item
         android:id="@+id/page_2"
         android:enabled="true"
-        android:icon="@drawable/ic_launcher_background"
-        android:title="text2"/>
+
+
+        android:icon="@drawable/ic_baseline_location_on_24"
+        android:title="Map"/>
 </menu>

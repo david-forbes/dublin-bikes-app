@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">publicTransport</string>
+    <string name="search_hint">searchhint</string>
 </resources>

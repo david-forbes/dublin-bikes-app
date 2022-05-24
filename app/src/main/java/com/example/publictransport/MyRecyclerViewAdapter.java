@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
@@ -18,6 +19,7 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAd
     private ArrayList<StationInfoInstance> mData;
     private LayoutInflater mInflater;
     private ItemClickListener mClickListener;
+    private ItemLongClickListener mLongClickListener;
     private MyFilter filter;
 
     // data is passed into the constructor
@@ -43,6 +45,11 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAd
         holder.tvBikesAvailable.setText(bikesAvailable);
         holder.tvStationName.setText(stationName);
         holder.tvBikeStandsAvailable.setText(bikeStandsAvailable);
+        if (mData.get(position).getPinned()==1){
+        holder.cardView.setBackgroundColor(MyApplication.getAppContext().getResources().getColor(R.color.teal_700));
+    }else{
+            holder.cardView.setBackgroundColor(MyApplication.getAppContext().getResources().getColor(R.color.white));
+        }
     }
 
     // binds the data to the TextView in each row
@@ -72,22 +79,32 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAd
 
     // stores and recycles views as they are scrolled off screen
 
-    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener{
         TextView tvBikesAvailable;
         TextView tvStationName;
         TextView tvBikeStandsAvailable;
+        CardView cardView;
 
         ViewHolder(View itemView) {
             super(itemView);
             tvStationName = itemView.findViewById(R.id.tvStationName);
             tvBikesAvailable = itemView.findViewById(R.id.tvBikesAvailable);
             tvBikeStandsAvailable = itemView.findViewById(R.id.tvBikeStandsAvailable);
-            itemView.setOnClickListener(this);
+            cardView = itemView.findViewById(R.id.cardView);
+            itemView.setOnClickListener(this::onClick);
+            itemView.setLongClickable(true);
+            itemView.setOnLongClickListener(this::onLongClick);
         }
 
         @Override
         public void onClick(View view) {
             if (mClickListener != null) mClickListener.onItemClick(view, getAdapterPosition());
+        }
+
+        @Override
+        public boolean onLongClick(View view) {
+            if (mLongClickListener != null) mLongClickListener.onItemLongClick(view, getAdapterPosition());
+            return true;
         }
     }
 
@@ -100,10 +117,16 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAd
     void setClickListener(ItemClickListener itemClickListener) {
         this.mClickListener = itemClickListener;
     }
+    void setLongClickListener(ItemLongClickListener longClickListener) {
+        this.mLongClickListener = longClickListener;
+    }
 
     // parent activity will implement this method to respond to click events
     public interface ItemClickListener {
         void onItemClick(View view, int position);
+    }
+    public interface ItemLongClickListener {
+        void onItemLongClick(View view, int position);
     }
 
 }
