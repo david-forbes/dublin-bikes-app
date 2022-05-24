@@ -5,6 +5,7 @@ import static java.lang.Math.min;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -19,6 +20,7 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
 import androidx.appcompat.widget.Toolbar;
@@ -55,6 +57,7 @@ public class RecyclerFragment extends Fragment implements MyRecyclerViewAdapter.
         recyclerView.setAdapter(adapter);
 
         adapter.setClickListener(this::onItemClick);
+        adapter.setLongClickListener(this::onItemLongClick);
 
         return view;
     }
@@ -141,6 +144,26 @@ public class RecyclerFragment extends Fragment implements MyRecyclerViewAdapter.
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putString(stationInfo.get(0).getName(), "true");
         editor.apply();
+    }
+    public void onItemLongClick(View view, int position) {
+        Log.d(TAG, "onItemLongClick: ");
+
+
+        Toast.makeText(MyApplication.getAppContext(), "Station has been removed from favourites", Toast.LENGTH_SHORT).show();
+        stationInfo.get(position).setPinned(0);
+        StationInfoInstance stationInfoInstance = stationInfo.get(position);
+        stationInfo.remove(position);
+        stationInfo.add(stationInfo.size()-1,stationInfoInstance);
+        adapter.notifyDataSetChanged();
+
+
+        Context context = MyApplication.getAppContext();
+        SharedPreferences sharedPreferences = context.getSharedPreferences("com.example.publictransport",MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString(stationInfo.get(0).getName(), "");
+        editor.apply();
+
+
     }
 
 }
