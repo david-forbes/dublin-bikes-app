@@ -47,6 +47,7 @@ public class RecyclerFragment extends Fragment implements MyRecyclerViewAdapter.
         View view = inflater.inflate(R.layout.fragment_recycler, container, false);
         Toolbar toolbar = (Toolbar) view.findViewById(R.id.toolbarView);
         ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
+        toolbar.setTitle("Dublin Bikes");
 
         RecyclerView recyclerView = view.findViewById(R.id.rvStations);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));

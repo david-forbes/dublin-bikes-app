@@ -46,7 +46,7 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAd
         holder.tvStationName.setText(stationName);
         holder.tvBikeStandsAvailable.setText(bikeStandsAvailable);
         if (mData.get(position).getPinned()==1){
-        holder.cardView.setBackgroundColor(MyApplication.getAppContext().getResources().getColor(R.color.teal_700));
+        holder.cardView.setBackgroundColor(MyApplication.getAppContext().getResources().getColor(R.color.DimGray));
     }else{
             holder.cardView.setBackgroundColor(MyApplication.getAppContext().getResources().getColor(R.color.white));
         }

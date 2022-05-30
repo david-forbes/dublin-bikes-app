@@ -17,6 +17,7 @@
         card_view:carduUseCompatPadding="true"
 
         tools:layout_editor_absoluteX="-2dp"
+    app:cardCornerRadius="10dp"
         >
 
         <androidx.constraintlayout.widget.ConstraintLayout
