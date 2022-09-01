@@ -21,7 +21,7 @@
         app:menu="@menu/bottom_navigation_menu"
         android:background="@android:color/black"
         app:itemIconTint="@android:color/white"
-        app:itemTextColor="@android:color/white"
+        app:itemTextColor="@android:color/black"
         />
 
     <androidx.fragment.app.FragmentContainerView

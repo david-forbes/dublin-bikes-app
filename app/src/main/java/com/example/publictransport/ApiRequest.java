@@ -39,11 +39,9 @@ public class ApiRequest extends AsyncTask {
                 while ((inputStr = streamReader.readLine()) != null) {
                     responseStrBuilder.append(inputStr);
                 }
-                //Log.d(TAG, "doInBackground: "+responseStrBuilder);
-                requestResponse = responseStrBuilder.toString();
-                //Log.d(TAG, "doInBackground: "+responseStrBuilder.toString());
 
-                //Log.d(TAG, "queryApi: " + requestResponse.length());
+                requestResponse = responseStrBuilder.toString();
+
 
             } finally {
                 urlConnection.disconnect();
@@ -51,10 +49,7 @@ public class ApiRequest extends AsyncTask {
         } catch (Exception e) {
             Log.d(TAG, "queryApi: " + e);
         }
-        /*
-        return requestResponse;
-
-         */
+        
         return parseJson(requestResponse);
     }
     public static ArrayList<StationInfoInstance> parseJson(String stringObject) {

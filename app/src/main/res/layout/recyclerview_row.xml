@@ -10,20 +10,38 @@
         xmlns:card_view="http://schemas.android.com/tools"
         android:layout_width="match_parent"
 
-        android:layout_marginBottom="1dp"
+        android:layout_marginTop="0.5dp"
         card_view:cardElevation="5dp"
         android:id="@+id/cardView"
         android:layout_height="100dp"
         card_view:carduUseCompatPadding="true"
 
+
         tools:layout_editor_absoluteX="-2dp"
-    app:cardCornerRadius="10dp"
-        >
+    >
+    <!--app:cardCornerRadius="10dp"
+    -->
+
+
+
+
 
         <androidx.constraintlayout.widget.ConstraintLayout
 
             android:layout_width="match_parent"
             android:layout_height="match_parent">
+
+            <ImageView
+                android:id="@+id/imageView"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="1.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.0"
+                app:srcCompat="@drawable/star_foreground" />
 
             <TextView
                 android:id="@+id/tvStationName"

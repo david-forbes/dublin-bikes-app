@@ -4,6 +4,7 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -46,9 +47,11 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAd
         holder.tvStationName.setText(stationName);
         holder.tvBikeStandsAvailable.setText(bikeStandsAvailable);
         if (mData.get(position).getPinned()==1){
-        holder.cardView.setBackgroundColor(MyApplication.getAppContext().getResources().getColor(R.color.DimGray));
-    }else{
-            holder.cardView.setBackgroundColor(MyApplication.getAppContext().getResources().getColor(R.color.white));
+        //holder.cardView.setBackgroundColor(MyApplication.getAppContext().getResources().getColor(R.color.DimGray));
+            holder.imageView.setVisibility(View.VISIBLE);
+        }else{
+            //holder.cardView.setBackgroundColor(MyApplication.getAppContext().getResources().getColor(R.color.white));
+            holder.imageView.setVisibility(View.INVISIBLE);
         }
     }
 
@@ -80,6 +83,7 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAd
     // stores and recycles views as they are scrolled off screen
 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener{
+        ImageView imageView;
         TextView tvBikesAvailable;
         TextView tvStationName;
         TextView tvBikeStandsAvailable;
@@ -87,6 +91,7 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAd
 
         ViewHolder(View itemView) {
             super(itemView);
+            imageView = itemView.findViewById(R.id.imageView);
             tvStationName = itemView.findViewById(R.id.tvStationName);
             tvBikesAvailable = itemView.findViewById(R.id.tvBikesAvailable);
             tvBikeStandsAvailable = itemView.findViewById(R.id.tvBikeStandsAvailable);

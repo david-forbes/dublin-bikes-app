@@ -21,7 +21,8 @@
         app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
 
     <androidx.recyclerview.widget.RecyclerView
-        android:background="@android:color/darker_gray"
+
+        android:background="@color/black"
 
         android:id="@+id/rvStations"
         android:layout_width="match_parent"
